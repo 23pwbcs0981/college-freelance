@@ -18,10 +18,10 @@ interface Project {
   title: string;
   description: string;
   budget: number;
-  deadline: string; // Or Date if you prefer working with Date objects
-  assigned_to?: string; // Optional if the project might not yet be assigned
+  deadline: string;
+  assigned_to?: string;
   is_completed: boolean;
-  created_at: string; // Or Date, depending on your database
+  created_at: string;
   status?: string;
 }
 
@@ -45,7 +45,7 @@ interface Feedback {
 
 const ClientDashboard: React.FC = () => {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState<
+  const [activeTab, setActiveTab] = useState
     "projects" | "applications" | "assigned"
   >("projects");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -71,7 +71,7 @@ const ClientDashboard: React.FC = () => {
   const acceptApplication = async (applicationId: number) => {
     try {
       const response = await fetch(
-        `http://localhost:6001/applications/accept-application/${applicationId}`,
+        `https://college-freelance-backend-production.up.railway.app/applications/accept-application/${applicationId}`,
         {
           method: "PUT",
           headers: {
@@ -82,7 +82,6 @@ const ClientDashboard: React.FC = () => {
 
       if (response.ok) {
         alert("Application Accepted!");
-        // Optionally, you can refresh the page or update your UI here
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
@@ -97,7 +96,7 @@ const ClientDashboard: React.FC = () => {
     const fetchClientData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:6001/projects/client/${clientId}`,
+          `https://college-freelance-backend-production.up.railway.app/projects/client/${clientId}`,
           {
             method: "GET",
             headers: {
@@ -338,7 +337,6 @@ const ClientDashboard: React.FC = () => {
                     <div className="mt-4 flex flex-wrap gap-2">
                       {project.status === "completed" && (
                         <button
-                          // onClick={() => handleFeedback(project)}
                           className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200"
                         >
                           Provide Feedback
@@ -452,7 +450,6 @@ const ClientDashboard: React.FC = () => {
                   Cancel
                 </button>
                 <button
-                  // onClick={submitStatusUpdate}
                   className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
                 >
                   Update Status
@@ -529,7 +526,6 @@ const ClientDashboard: React.FC = () => {
                   Cancel
                 </button>
                 <button
-                  // onClick={submitFeedback}
                   className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors duration-200"
                 >
                   Submit Feedback

@@ -9,20 +9,20 @@ interface Project {
   description: string;
   budget: number;
   deadline: string;
-  skills: string[]; // Ensures skills is always an array
+  skills: string[];
 }
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [studentId, setStudentId] = useState(""); // Assume you have the student ID available somehow
+  const [studentId, setStudentId] = useState("");
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axios.get(`http://localhost:6001/projects`);
-        setProjects(res.data); // Directly set the fetched data
+        const res = await axios.get(`https://college-freelance-backend-production.up.railway.app/projects`);
+        setProjects(res.data);
       } catch (err) {
         console.error("Failed to fetch projects:", err);
         setError("Failed to load projects. Please try again.");
@@ -34,7 +34,6 @@ const Projects: React.FC = () => {
     fetchProjects();
   }, []);
 
-  // Function to handle apply click
   const handleApply = async (projectId: string) => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const studentId = user.student_id;
@@ -44,7 +43,7 @@ const Projects: React.FC = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:6001/applications", {
+      const res = await axios.post("https://college-freelance-backend-production.up.railway.app/applications", {
         project_id: projectId,
         student_id: studentId,
       });
@@ -101,7 +100,6 @@ const Projects: React.FC = () => {
                   Required Skills:
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {/* Check if skills is an array before mapping */}
                   {Array.isArray(project.skills) &&
                     project.skills.map((skill) => (
                       <span

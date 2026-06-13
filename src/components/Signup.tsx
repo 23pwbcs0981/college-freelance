@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; // Import axios for API calls
+import axios from "axios";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 const Signup = () => {
@@ -15,7 +15,6 @@ const Signup = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
@@ -23,7 +22,6 @@ const Signup = () => {
       return;
     }
 
-    // Prepare the user data to send to the backend
     const userData = {
       name: formData.name,
       email: formData.email,
@@ -36,7 +34,7 @@ const Signup = () => {
       let response;
 
       if (formData.userType === "student") {
-        response = await fetch("http://localhost:6001/students/signup", {
+        response = await fetch("https://college-freelance-backend-production.up.railway.app/students/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -45,7 +43,7 @@ const Signup = () => {
         });
       }
       if (formData.userType === "client") {
-        response = await fetch("http://localhost:6001/clients/signup", {
+        response = await fetch("https://college-freelance-backend-production.up.railway.app/clients/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -253,7 +251,7 @@ const Signup = () => {
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500">
                   Already have an account?{" "}
-                  <a
+                  
                     href="/login"
                     className="font-medium text-blue-600 hover:text-blue-500"
                   >
