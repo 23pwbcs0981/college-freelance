@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 const Signup = () => {
@@ -27,8 +26,6 @@ const Signup = () => {
       email: formData.email,
       password: formData.password,
     };
-    console.log("before post");
-    console.log(formData.userType);
 
     try {
       let response;
@@ -36,29 +33,22 @@ const Signup = () => {
       if (formData.userType === "student") {
         response = await fetch("https://college-freelance-backend-production.up.railway.app/students/signup", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(userData),
         });
       }
       if (formData.userType === "client") {
         response = await fetch("https://college-freelance-backend-production.up.railway.app/clients/signup", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(userData),
         });
-        console.log('response', response);
       }
-      console.log("after post");
 
       if (response && !response.ok) {
         throw new Error("Failed to sign up");
       }
 
-      console.log("before navigate");
       navigate("/login");
     } catch (error) {
       console.error(error);
@@ -68,10 +58,7 @@ const Signup = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleOptionClick = (userType: "student" | "client") => {
@@ -81,14 +68,10 @@ const Signup = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -104,11 +87,9 @@ const Signup = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
+
             <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Full Name
               </label>
               <div className="mt-1">
@@ -125,10 +106,7 @@ const Signup = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
               </label>
               <div className="mt-1">
@@ -146,10 +124,7 @@ const Signup = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <div className="mt-1">
@@ -167,10 +142,7 @@ const Signup = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
                 Confirm Password
               </label>
               <div className="mt-1">
@@ -188,45 +160,33 @@ const Signup = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="userType"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="userType" className="block text-sm font-medium text-gray-700">
                 I am a
               </label>
               <div className="custom-dropdown" ref={dropdownRef}>
                 <button
                   type="button"
                   className="custom-dropdown-button"
-                  onClick={() => {
-                    setIsDropdownOpen((prev) => !prev);
-                  }}
+                  onClick={() => setIsDropdownOpen((prev) => !prev)}
                 >
                   <span>
-                    {formData.userType.charAt(0).toUpperCase() +
-                      formData.userType.slice(1)}
+                    {formData.userType.charAt(0).toUpperCase() + formData.userType.slice(1)}
                   </span>
                   <ChevronDownIcon
-                    className={`h-5 w-5 transition-transform ${
-                      isDropdownOpen ? "transform rotate-180" : ""
-                    }`}
+                    className={`h-5 w-5 transition-transform ${isDropdownOpen ? "transform rotate-180" : ""}`}
                   />
                 </button>
 
                 {isDropdownOpen && (
                   <div className="custom-dropdown-menu">
                     <div
-                      className={`custom-dropdown-option ${
-                        formData.userType === "student" ? "selected" : ""
-                      }`}
+                      className={`custom-dropdown-option ${formData.userType === "student" ? "selected" : ""}`}
                       onClick={() => handleOptionClick("student")}
                     >
                       Student
                     </div>
                     <div
-                      className={`custom-dropdown-option ${
-                        formData.userType === "client" ? "selected" : ""
-                      }`}
+                      className={`custom-dropdown-option ${formData.userType === "client" ? "selected" : ""}`}
                       onClick={() => handleOptionClick("client")}
                     >
                       Client
@@ -247,20 +207,16 @@ const Signup = () => {
           </form>
 
           <div className="mt-6">
-            <div className="relative">
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  Already have an account?{" "}
-                  
-                    href="/login"
-                    className="font-medium text-blue-600 hover:text-blue-500"
-                  >
-                    Sign in
-                  </a>
-                </span>
-              </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">
+                Already have an account?{" "}
+                <a href="/login" className="font-medium text-blue-600 hover:text-blue-500">
+                  Sign in
+                </a>
+              </span>
             </div>
           </div>
+
         </div>
       </div>
     </div>
