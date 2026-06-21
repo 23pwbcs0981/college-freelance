@@ -20,8 +20,8 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        `http://localhost:6001/${formData.userType}s/login`,
+    const response = await fetch(
+  `https://college-freelance-backend-production.up.railway.app/${formData.userType}s/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
