@@ -49,7 +49,8 @@ const Signup = () => {
         throw new Error("Failed to sign up");
       }
 
-      navigate("/login");
+    alert("Account created successfully!");
+navigate("/login");
     } catch (error) {
       console.error(error);
       alert("An error occurred. Please try again.");
